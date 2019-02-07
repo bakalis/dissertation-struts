@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+  
+<struts>
+    <include file="struts-default.xml"/>
+    <package name="default" namespace="/" extends="struts-default">
+        <action name="index" class="com.bakalis.struts.actions.ContentsAction">
+        	<result name="success">/WEB-INF/jsp/index.jsp</result>
+        </action>
+        <action name="transactions" class="com.bakalis.struts.actions.PastTransactionsAction">
+        	<result name="success">/WEB-INF/jsp/transactions.jsp</result>
+        </action>
+        <action name="categories" class="com.bakalis.struts.actions.CategoriesAction"> 
+        	<result name="categories">/WEB-INF/jsp/categories.jsp</result>
+        	<result name="redirect" type="redirectAction">
+        		<param name="actionName">categories</param>
+        	</result>
+        </action>
+        <action name="addCategory" class="com.bakalis.struts.actions.AddCategoryAction">
+        	<result name="addCategory">/WEB-INF/jsp/addCategory.jsp</result>
+        	<result name="redirect" type="redirectAction">
+        		<param name="actionName">categories</param>
+        	</result>
+        </action>
+        <action name="clients" class="com.bakalis.struts.actions.ClientsAction"> 
+        	<result name="clients">/WEB-INF/jsp/clients.jsp</result>
+        	<result name="redirect" type="redirectAction">
+        		<param name="actionName">clients</param>
+        	</result>
+        </action>
+        <action name="addClient" class="com.bakalis.struts.actions.AddClientAction">
+        	<result name="addClient">/WEB-INF/jsp/addClient.jsp</result>
+        	<result name="redirect" type="redirectAction">
+        		<param name="actionName">clients</param>
+        	</result>
+        </action>
+        <action name="entry" class="com.bakalis.struts.actions.EntryAction">
+        	<result name="entry">/WEB-INF/jsp/entry.jsp</result>
+        	<result name="redirect" type="redirectAction">
+        		<param name="actionName">index</param>
+        	</result>
+        </action>
+        <action name="retrieval" class="com.bakalis.struts.actions.RetrievalAction">
+        	<result name="retrieval">/WEB-INF/jsp/retrieval.jsp</result>
+        	<result name="redirect" type="redirectAction">
+        		<param name="actionName">index</param>
+        	</result>
+        </action>
+    </package>
+</struts>
