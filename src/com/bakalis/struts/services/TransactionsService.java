@@ -12,20 +12,17 @@ import com.bakalis.struts.configuration.HibernateUtil;
 public class TransactionsService {
 
 	protected ValidationService validationService;
-	//protected ErrorLoggingBean errorBean;
+	
 	
 	//Initializing the Service Dependencies
 	public TransactionsService(){
 		validationService = new ValidationService();
-		//FacesContext context = FacesContext.getCurrentInstance();
-		//ELContext elContext = context.getELContext();
-		//errorBean = (ErrorLoggingBean) elContext.getELResolver().getValue(elContext, null, "error");
+		
 	}
 	
 	
 	//This Method Adds Products to the Database and Adds the addition to the transactions
 	public void manageEntry(String productId, String productName, String category, String client, String quantity, String code){
-		//errorBean.reset();
 		if(validationService.isNumeric(productId) && validationService.isNumeric(quantity) 
 				&& !validationService.isEmptyString(productName)
 				&& !validationService.isEmptyString(category)      //Checking that supposed Integer parameters are 
@@ -59,15 +56,14 @@ public class TransactionsService {
 			tr.commit();
 			session.close();
 		}else{
-			//errorBean.setError("Wrong Input");
+			ErrorLoggingService.setError("Wrong Input");
 		}
 		
 		
 	}
 	
 	//This Method Retrieves Products from the Database and Adds the retrieval to the transactions
-	public void manageRetrieval(String productId, String productName, String category, String client, String quantity, String code){
-		//errorBean.reset();	
+	public void manageRetrieval(String productId, String productName, String category, String client, String quantity, String code){	
 		if(validationService.isNumeric(productId) && validationService.isNumeric(quantity) 
 				&& !validationService.isEmptyString(productName)
 				&& !validationService.isEmptyString(category)      //Checking that supposed Integer parameters are 
@@ -87,18 +83,18 @@ public class TransactionsService {
 					session.update(prod);
 					addTransactionToDatabase(prod, cl, quant, false);
 				}else{ // We don't have the required quantity despite having some of this product
-					////errorBean.setError("We don't have enough of this product in stock");
+					ErrorLoggingService.setError("We don't have enough of this product in stock");
 				}
 				tr.commit();
 				session.close();
 				
 			}else{ // We don't have any of this product in our warehouse
-				//errorBean.setError("We don't have any of this product in stock");
+				ErrorLoggingService.setError("We don't have any of this product in stock");
 				tr.commit();
 				session.close();
 			}
 		}else{
-			//errorBean.setError("Wrong Input");
+			ErrorLoggingService.setError("Wrong Input");
 		}
 			
 	}
@@ -128,7 +124,6 @@ public class TransactionsService {
 
 	// Adds a client to the database 
 	public void addClient(String clientId, String clientName) {
-		//errorBean.reset();
 		if(validationService.isNumeric(clientId) && !validationService.isEmptyString(clientName)){
 		
 			SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -141,13 +136,13 @@ public class TransactionsService {
 			tr.commit();
 			session.close();
 		}else{
-			//errorBean.setError("Wrong Input");
+			ErrorLoggingService.setError("Wrong Input");
 		}
 	}
 
 	// Deletes the Client with the given Id from the Database
 	public void deleteClient(String deleteId) {
-		//errorBean.reset();
+		ErrorLoggingService.reset();
 		if(validationService.isNumeric(deleteId)){
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
@@ -156,19 +151,18 @@ public class TransactionsService {
 			if(client!=null){
 				session.delete(client);
 			}else{
-				//errorBean.setError("There is not a client with this Id");
+				ErrorLoggingService.setError("There is not a client with this Id");
 			}
 			tr.commit();
 			session.close();
 		}else{
-			//errorBean.setError("Wrong Input");
+			ErrorLoggingService.setError("Wrong Input");
 		}
 	}
 	
 	
 	//Updates an existing Client with the Given Data
 	public void editClient(String editedId, String editedName){
-		//errorBean.reset();
 		if(validationService.isNumeric(editedId) && !validationService.isEmptyString(editedName)){
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
@@ -179,12 +173,12 @@ public class TransactionsService {
 				session.update(client);
 				
 			}else{
-				//errorBean.setError("There is no Client with this Id");
+				ErrorLoggingService.setError("There is no Client with this Id");
 			}
 			tr.commit();
 			session.close();
 		}else{
-			//errorBean.setError("Wrong Input");
+			ErrorLoggingService.setError("Wrong Input");
 		}
 		
 	}
@@ -192,7 +186,6 @@ public class TransactionsService {
 	
 	//Adds a new Category
 	public void addCategory(String categoryId, String categoryName) {
-		//errorBean.reset();
 		if(validationService.isNumeric(categoryId) && !validationService.isEmptyString(categoryName)){
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
@@ -204,14 +197,13 @@ public class TransactionsService {
 			tr.commit();
 			session.close();
 		}else{			
-			//errorBean.setError("Wrong Input");
+			ErrorLoggingService.setError("Wrong Input");
 		}
 	}
 	
 	
 	//Deletes the Category with the given Id
 	public void deleteCategory(String deleteId) {
-		//errorBean.reset();
 		if(validationService.isNumeric(deleteId)){
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
@@ -220,19 +212,18 @@ public class TransactionsService {
 			if(category!=null){
 				session.delete(category);
 			}else{
-				//errorBean.setError("There is not a category with this Id");
+				ErrorLoggingService.setError("There is not a category with this Id");
 			}
 			tr.commit();
 			session.close();
 		}else{
-			//errorBean.setError("Wrong Input");
+			ErrorLoggingService.setError("Wrong Input");
 		}
 	}
 	
 	
 	//Edits an Existing Category with the Given Data
 	public void editCategory(String editedId, String editedName){
-		//errorBean.reset();
 		if(validationService.isNumeric(editedId) && !validationService.isEmptyString(editedName)){
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
@@ -241,14 +232,13 @@ public class TransactionsService {
 			if(category!=null){
 				category.setCategoryName(editedName);
 				session.update(category);
-				
 			}else{
-				//errorBean.setError("There is not a category with this Id");
+				ErrorLoggingService.setError("There is not a category with this Id");
 			}
 			tr.commit();
 			session.close();
 		}else{
-			//errorBean.setError("Wrong Input");
+			ErrorLoggingService.setError("Wrong Input");
 		}
 	}
 	

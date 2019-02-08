@@ -13,35 +13,17 @@
 </head>
 <body>
 	
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		  <div class="container-fluid navbarId">
-		    <a href="file:///E:/Angular/spring/index.html" class="navbar-brand">Bakalis Apps</a>
-		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-		      <span class="navbar-toggler-icon"></span>
-		    </button>
-		    <div class="collapse navbar-collapse" id="navbarResponsive">
-		      <ul class="navbar-nav ml-auto">
-		        <li class="nav-item">
-		          <a href="#" class="nav-link">Home</a>
-		        </li>
-		        <li class="nav-item">
-		          <a href="#" class="nav-link">About</a>
-		        </li>
-		        <li class="nav-item">
-		          <a href="#" class="nav-link">Contact</a>
-		        </li>
-		        <li class="nav-item">
-		          <a href="file:///E:/Angular/spring/login.html" class="nav-link">Login</a>
-		        </li>
-		      </ul>
-		    </div>
-		  </div>
-	</nav>
+	<jsp:include page="navbar.jsp"/>
 
 
 	<div class="container-fluid">
 		<div class="content-wrapper">
 			<h1 class="text-center pageTitle">Past Transactions</h1>
+			<c:if test="${error!=null}">
+				<div class="alert alert-danger text-center">
+					<s:property value="error"/>
+				</div>
+			</c:if>
 			<div class="row">
 				<div class="col-lg-12">
 					<table class="table table-dark">
@@ -73,11 +55,10 @@
 
 	</div>	
 
-	
 
-<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="/resources/js/popper.min.js"></script>
-<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<s:url value="/resources/js/jquery.min.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/resources/js/popper.min.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
 
 </body>
 </html>

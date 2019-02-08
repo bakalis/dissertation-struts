@@ -7,25 +7,48 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.springframework.security.core.Authentication;
 
 import com.bakalis.models.Category;
 import com.bakalis.models.Client;
+import com.bakalis.struts.services.AuthenticationService;
 import com.bakalis.struts.services.ContentsService;
+import com.bakalis.struts.services.ErrorLoggingService;
 import com.bakalis.struts.services.TransactionsService;
 
 public class RetrievalAction implements ServletRequestAware{
 
+	protected Authentication auth;
+	protected String error;
 	protected HttpServletRequest request;
+	//Strings for the Form fields
 	protected String productId;
 	protected String productName;
 	protected String category;
 	protected String client;
 	protected String quantity;
 	protected String code;
-	
+	//Maps to be used to populate the Struts 2 Select tags
 	protected Map<String, String> categories;
 	protected Map<String, String> clients;
 	
+	//Getters and Setters for all the fields
+	
+	public Authentication getAuth() {
+		return auth;
+	}
+
+	public void setAuth(Authentication auth) {
+		this.auth = auth;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
 
 	public Map<String, String> getCategories() {
 		return categories;
@@ -94,19 +117,27 @@ public class RetrievalAction implements ServletRequestAware{
 
 	
 	public String execute(){
+		auth = AuthenticationService.getAuth();
+		error = ErrorLoggingService.getError();
+		ErrorLoggingService.reset();
 		ContentsService contentsService = new ContentsService();
+		//We get all the Categories and Clients
 		ArrayList<Category> cats = contentsService.getCategories();
 		ArrayList<Client> clnts = contentsService.getClients();
+		//We instantiate the Maps
 		categories = new HashMap<String, String>();
 		clients = new HashMap<String, String>();
+		//We populate the maps using the Categories and Clients objects
 		for(Category cat : cats){
 			categories.put(String.valueOf(cat.getId()), cat.getCategoryName());
 		}
 		for(Client clnt : clnts){
 			clients.put(String.valueOf(clnt.getId()), clnt.getClientName());
 		}
+		//If it's a GET just return the View
 		if(request.getMethod().equals("GET")){
 			return "retrieval";
+		//If it's a POST use the TransactionsService to save the Data.
 		}else if(request.getMethod().equals("POST")){
 			TransactionsService transactionsService = new TransactionsService();
 			transactionsService.manageRetrieval(productId, productName, category, client, quantity, code);

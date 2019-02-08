@@ -48,5 +48,8 @@
         		<param name="actionName">index</param>
         	</result>
         </action>
+        <action name="login" class="com.bakalis.struts.actions.LoginAction">
+        	<result name="login">/WEB-INF/jsp/login.jsp</result>
+        </action>
     </package>
 </struts>

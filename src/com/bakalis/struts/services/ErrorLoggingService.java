@@ -7,26 +7,26 @@ package com.bakalis.struts.services;
  * */
 public class ErrorLoggingService {
 
-	protected String error = null;
+	protected static String error = null;
 
-	public String getError() {
+	public static String getError() {
 		return error;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public static void setError(String error) {
+		ErrorLoggingService.error = error;
 	}
 	
 	
-	public boolean errorExists(){
+	public static boolean errorExists(){
 		if(error==null)
 			return false;
 		else
 			return true;
 	}
 	
-	public void reset(){
-		this.setError(null);
+	public static void reset(){
+		ErrorLoggingService.setError(null);
 	}
 		
 	

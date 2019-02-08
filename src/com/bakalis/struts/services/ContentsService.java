@@ -19,20 +19,16 @@ public class ContentsService {
 	
 	
 	protected ValidationService validationService;
-	//protected ErrorLoggingBean errorBean;
+	
 	
 	//Initializing the Service Dependencies
 	public ContentsService(){
 		validationService = new ValidationService();
-		//FacesContext context = FacesContext.getCurrentInstance();
-		//ELContext elContext = context.getELContext();
-		//errorBean = (ErrorLoggingBean) elContext.getELResolver().getValue(elContext, null, "error");
 	}
 	
 	//Get all the contents in the database
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public ArrayList<Product> getAllContents(){
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		Criteria crit = session.createCriteria(Product.class);
@@ -45,7 +41,6 @@ public class ContentsService {
 	//Get the contents for the table by the search form values
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public ArrayList<Product> getSearchedContents(String query, String filter){
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		ArrayList<Product> products = new ArrayList<Product>();
@@ -95,7 +90,7 @@ public class ContentsService {
 				}
 				break;
 			default:
-				//errorBean.setError("Wrong Selection Filter");
+				ErrorLoggingService.setError("Wrong Selection Filter");
 				break;
 		}
 		
@@ -108,7 +103,6 @@ public class ContentsService {
 	//Getting the List of Transactions
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public ArrayList<SingleTransaction> getPastTransactions(){
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		Criteria crit = session.createCriteria(SingleTransaction.class);
@@ -120,7 +114,6 @@ public class ContentsService {
 	//Getting the List of all Clients
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public ArrayList<Client> getClients(){
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		Criteria crit = session.createCriteria(Client.class);
@@ -132,7 +125,6 @@ public class ContentsService {
 	// Getting a list of clients Based on the search in clients.xhtml
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public ArrayList<Client> getSearchedClients(String searchBar){
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		Criteria crit = session.createCriteria(Client.class);
@@ -150,18 +142,17 @@ public class ContentsService {
 
 	//Given an Id we return the client
 	public Client getEditedClient(String editId) {
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		if(validationService.isNumeric(editId)){
 			Client client = session.get(Client.class, Integer.parseInt(editId));
 			if(client==null){
-				////errorBean.setError("There is no Client with that Id");
+				ErrorLoggingService.setError("There is no Client with that Id");
 			}
 			session.close();
 			return client;
 		} else{
-			//errorBean.setError("You need to pass an Integer as an Id for the Client to be edited.");
+			ErrorLoggingService.setError("You need to pass an Integer as an Id for the Client to be edited.");
 			session.close();
 			return null;
 		}
@@ -172,7 +163,6 @@ public class ContentsService {
 	//Getting the List of all Categories
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public ArrayList<Category> getCategories(){
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		Criteria crit = session.createCriteria(Category.class);
@@ -185,7 +175,6 @@ public class ContentsService {
 	// Getting a list of clients Based on the search in clients.xhtml
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public ArrayList<Category> getSearchedCategories(String searchBar){
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		Criteria crit = session.createCriteria(Category.class);
@@ -204,18 +193,17 @@ public class ContentsService {
 	
 	//Given an Id we return the Category
 	public Category getEditedCategory(String editedId) {
-		//errorBean.reset();
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		if(validationService.isNumeric(editedId)){
 			Category category = session.get(Category.class, Integer.parseInt(editedId));
 			if(category==null){
-				//.setError("There is no Category with that Id");
+				ErrorLoggingService.setError("There is no Category with that Id");
 			}
 			session.close();
 			return category;
 		} else{
-			//errorBean.setError("You need to pass an Integer as an Id for the Category to be edited.");
+			ErrorLoggingService.setError("You need to pass an Integer as an Id for the Category to be edited.");
 			session.close();
 			return null;
 		}
